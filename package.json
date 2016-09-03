@@ -1,8 +1,13 @@
 {
   "name": "smithers-imdb",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "An imdb for the Smithers Assistant",
   "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SmithersAssistant/Plugin-IMDB.git"
+  },
+  "homepage": "https://github.com/SmithersAssistant/Plugin-IMDB",
   "keywords": [
     "smithers",
     "assistant",
