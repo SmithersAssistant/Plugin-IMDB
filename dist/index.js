@@ -6,19 +6,14 @@ Object.defineProperty(exports, "__esModule", {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
 var _electron = require('electron');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 var IMDB_COMPONENT = 'com.robinmalfait.imdb';
 
 exports.default = function (robot) {
+  var React = robot.dependencies.React;
   var Blank = robot.cards.Blank;
   var _robot$UI = robot.UI;
   var StyleSheet = _robot$UI.StyleSheet;
@@ -28,7 +23,7 @@ exports.default = function (robot) {
   var Button = _robot$UI.Button;
 
 
-  var Imdb = _react2.default.createClass({
+  var Imdb = React.createClass({
     displayName: 'Imdb',
     getInitialState: function getInitialState() {
       var q = this.props.q;
@@ -152,47 +147,47 @@ exports.default = function (robot) {
       var img = result.img;
 
 
-      return searching ? _react2.default.createElement(
+      return searching ? React.createElement(
         Blank,
         _extends({}, other, { title: 'IMDB' }),
         'Searching for ',
         q
-      ) : _react2.default.createElement(
+      ) : React.createElement(
         Blank,
         _extends({}, other, { title: 'IMDB (' + q + ')' }),
-        _react2.default.createElement(
+        React.createElement(
           'h1',
           { className: 'clearfix' },
           title,
           ' ',
-          _react2.default.createElement(
+          React.createElement(
             'small',
             { className: css(this.styles.year) },
             '(',
             year,
             ')'
           ),
-          _react2.default.createElement(
+          React.createElement(
             'small',
             { className: css(this.styles.rating) },
-            _react2.default.createElement(
+            React.createElement(
               'div',
               { className: css(this.styles.ratingWrapper) },
-              _react2.default.createElement(Icon, { className: css(this.styles.star), icon: 'star' }),
-              _react2.default.createElement(
+              React.createElement(Icon, { className: css(this.styles.star), icon: 'star' }),
+              React.createElement(
                 'div',
                 null,
-                _react2.default.createElement(
+                React.createElement(
                   'span',
                   { className: css(this.styles.largerFont) },
                   score
                 ),
-                _react2.default.createElement(
+                React.createElement(
                   'span',
                   { className: css(this.styles.xSmallFont) },
                   '/10'
                 ),
-                _react2.default.createElement(
+                React.createElement(
                   'span',
                   { className: css(this.styles.votes) },
                   votes
@@ -201,24 +196,24 @@ exports.default = function (robot) {
             )
           )
         ),
-        _react2.default.createElement('hr', null),
-        _react2.default.createElement(
+        React.createElement('hr', null),
+        React.createElement(
           'div',
           { className: 'clearfix ' + css(this.styles.mainContent) },
-          img && _react2.default.createElement(
+          img && React.createElement(
             'div',
             { className: css(this.styles.imageWrapper) },
-            _react2.default.createElement('img', { className: css(this.styles.image), src: img })
+            React.createElement('img', { className: css(this.styles.image), src: img })
           ),
-          _react2.default.createElement(
+          React.createElement(
             'div',
             { className: css(this.styles.plot) },
-            _react2.default.createElement(
+            React.createElement(
               'p',
               null,
               plot
             ),
-            _react2.default.createElement(
+            React.createElement(
               Button,
               { onClick: function onClick() {
                   return _electron.shell.openExternal('http://www.imdb.com/title/' + imdbID);
@@ -227,14 +222,14 @@ exports.default = function (robot) {
             )
           )
         ),
-        _react2.default.createElement('hr', null),
-        _react2.default.createElement(
+        React.createElement('hr', null),
+        React.createElement(
           'ul',
           { className: css(this.styles.footer) },
-          _react2.default.createElement(
+          React.createElement(
             'li',
             null,
-            _react2.default.createElement(
+            React.createElement(
               'strong',
               null,
               'Director:'
@@ -242,10 +237,10 @@ exports.default = function (robot) {
             ' ',
             director
           ),
-          _react2.default.createElement(
+          React.createElement(
             'li',
             null,
-            _react2.default.createElement(
+            React.createElement(
               'strong',
               null,
               'Writer' + (writers.length > 1 ? 's' : '') + ':'
@@ -253,10 +248,10 @@ exports.default = function (robot) {
             ' ',
             writers.join(', ')
           ),
-          _react2.default.createElement(
+          React.createElement(
             'li',
             null,
-            _react2.default.createElement(
+            React.createElement(
               'strong',
               null,
               'Actor' + (actors.length > 1 ? 's' : '') + ':'
@@ -264,10 +259,10 @@ exports.default = function (robot) {
             ' ',
             actors.join(', ')
           ),
-          _react2.default.createElement(
+          React.createElement(
             'li',
             null,
-            _react2.default.createElement(
+            React.createElement(
               'strong',
               null,
               'Genre' + (genres.length > 1 ? 's' : '') + ':'

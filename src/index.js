@@ -1,10 +1,9 @@
-import React from 'react'
 import {shell} from 'electron'
 
 const IMDB_COMPONENT = 'com.robinmalfait.imdb';
 
 export default robot => {
-
+  const {React} = robot.dependencies
   const {Blank} = robot.cards;
   const {StyleSheet, css, color, Icon, Button} = robot.UI
 
