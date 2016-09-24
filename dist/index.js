@@ -8,6 +8,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _electron = require('electron');
 
+var _styles = require('./styles');
+
+var _styles2 = _interopRequireDefault(_styles);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 var IMDB_COMPONENT = 'com.robinmalfait.imdb';
@@ -16,11 +22,11 @@ exports.default = function (robot) {
   var React = robot.dependencies.React;
   var Blank = robot.cards.Blank;
   var _robot$UI = robot.UI;
-  var StyleSheet = _robot$UI.StyleSheet;
-  var css = _robot$UI.css;
-  var color = _robot$UI.color;
   var Icon = _robot$UI.Icon;
   var Button = _robot$UI.Button;
+  var enhance = robot.enhance;
+  var restorableComponent = robot.restorableComponent;
+  var withStyles = robot.withStyles;
 
 
   var Imdb = React.createClass({
@@ -37,58 +43,6 @@ exports.default = function (robot) {
     },
     componentDidMount: function componentDidMount() {
       this.search(this.state.q);
-      this.styles = StyleSheet.create({
-        year: {
-          color: '#ccc',
-          fontSize: 16
-        },
-        rating: {
-          float: 'right',
-          color: '#ccc',
-          fontWeight: 100,
-          fontSize: '16px',
-          verticalAlign: 'bottom'
-        },
-        ratingWrapper: {
-          display: 'flex',
-          alignItems: 'center'
-        },
-        star: {
-          color: color('yellow', 700),
-          marginRight: 6
-        },
-        largerFont: {
-          fontSize: 'larger'
-        },
-        xSmallFont: {
-          fontSize: 'x-small'
-        },
-        votes: {
-          display: 'flex',
-          fontWeight: 100,
-          justifyContent: 'flex-end'
-        },
-        mainContent: {
-          display: 'flex'
-        },
-        imageWrapper: {
-          minWidth: 150,
-          maxWidth: 300,
-          width: '100%',
-          padding: 15
-        },
-        image: {
-          width: '100%'
-        },
-        plot: {
-          padding: 15
-        },
-        footer: {
-          margin: 0,
-          padding: 0,
-          listStyleType: 'none'
-        }
-      });
     },
     search: function search(data) {
       var _this = this;
@@ -97,7 +51,8 @@ exports.default = function (robot) {
 
       robot.fetchJson(url).then(function (result) {
         if (result.Response == 'True') {
-          _this.setState({ result: {
+          _this.setState({
+            result: {
               title: result.Title,
               year: result.Year,
               genres: result.Genre.split(',').map(function (i) {
@@ -115,7 +70,8 @@ exports.default = function (robot) {
               score: result.imdbRating,
               votes: result.imdbVotes,
               imdbID: result.imdbID
-            }, searching: false });
+            }, searching: false
+          });
         } else {
           _this.props.removeCard();
           robot.notify('No movies found that match ' + _this.state.q);
@@ -124,9 +80,10 @@ exports.default = function (robot) {
     },
     render: function render() {
       var _props = this.props;
+      var styles = _props.styles;
       var q = _props.q;
 
-      var other = _objectWithoutProperties(_props, ['q']);
+      var other = _objectWithoutProperties(_props, ['styles', 'q']);
 
       var _state = this.state;
       var searching = _state.searching;
@@ -159,37 +116,36 @@ exports.default = function (robot) {
           'h1',
           { className: 'clearfix' },
           title,
-          ' ',
           React.createElement(
             'small',
-            { className: css(this.styles.year) },
+            { className: styles.year },
             '(',
             year,
             ')'
           ),
           React.createElement(
             'small',
-            { className: css(this.styles.rating) },
+            { className: styles.rating },
             React.createElement(
               'div',
-              { className: css(this.styles.ratingWrapper) },
-              React.createElement(Icon, { className: css(this.styles.star), icon: 'star' }),
+              { className: styles.ratingWrapper },
+              React.createElement(Icon, { className: styles.star, icon: 'star' }),
               React.createElement(
                 'div',
                 null,
                 React.createElement(
                   'span',
-                  { className: css(this.styles.largerFont) },
+                  { className: styles.largerFont },
                   score
                 ),
                 React.createElement(
                   'span',
-                  { className: css(this.styles.xSmallFont) },
+                  { className: styles.xSmallFont },
                   '/10'
                 ),
                 React.createElement(
                   'span',
-                  { className: css(this.styles.votes) },
+                  { className: styles.votes },
                   votes
                 )
               )
@@ -199,15 +155,15 @@ exports.default = function (robot) {
         React.createElement('hr', null),
         React.createElement(
           'div',
-          { className: 'clearfix ' + css(this.styles.mainContent) },
+          { className: 'clearfix ' + styles.mainContent },
           img && React.createElement(
             'div',
-            { className: css(this.styles.imageWrapper) },
-            React.createElement('img', { className: css(this.styles.image), src: img })
+            { className: styles.imageWrapper },
+            React.createElement('img', { className: styles.image, src: img })
           ),
           React.createElement(
             'div',
-            { className: css(this.styles.plot) },
+            { className: styles.plot },
             React.createElement(
               'p',
               null,
@@ -225,7 +181,7 @@ exports.default = function (robot) {
         React.createElement('hr', null),
         React.createElement(
           'ul',
-          { className: css(this.styles.footer) },
+          { className: styles.footer },
           React.createElement(
             'li',
             null,
@@ -275,7 +231,7 @@ exports.default = function (robot) {
     }
   });
 
-  robot.registerComponent(Imdb, IMDB_COMPONENT);
+  robot.registerComponent(enhance(Imdb, [restorableComponent, withStyles(_styles2.default)]), IMDB_COMPONENT);
 
   robot.listen(/^imdb (.*)$/, {
     description: "Search for a movie",

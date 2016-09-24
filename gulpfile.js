@@ -3,7 +3,7 @@ babel = require('gulp-babel');
 
 var config = {
   src: {
-    js: './src/index.js'
+    js: './src/*.js'
   },
   dest: {
     js: 'dist'
